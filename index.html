@@ -21,13 +21,20 @@
   });
   const db = getDatabase(app);
   window.__fb = {
-    push: (path, data) => push(ref(db, path), data),
-    remove: (path) => remove(ref(db, path)),
-    update: (path, data) => update(ref(db, path), data),
-    onValue: (path, cb) => onValue(ref(db, path), cb),
+    push:    (path, data) => push(ref(db, path), data),
+    remove:  (path)       => remove(ref(db, path)),
+    update:  (path, data) => update(ref(db, path), data),
+    onValue: (path, cb)   => onValue(ref(db, path), cb),
   };
 </script>
-<style>* { margin:0; padding:0; box-sizing:border-box; } body { background:#fdf8f2; font-family:Georgia,serif; color:#3a2a1a; } .date-time-row { display:flex; gap:12px; } .date-time-row > div { flex:1; min-width:0; } .date-time-row input { width:100%; min-width:0; min-height:44px; -webkit-appearance:none; appearance:none; } @media (max-width:500px) { .date-time-row { flex-direction:column; gap:0; } }</style>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#fdf8f2; font-family:Georgia,serif; color:#3a2a1a; }
+  .date-time-row { display:flex; gap:12px; }
+  .date-time-row > div { flex:1; min-width:0; }
+  .date-time-row input { width:100%; min-width:0; min-height:44px; -webkit-appearance:none; appearance:none; }
+  @media (max-width:500px) { .date-time-row { flex-direction:column; gap:0; } }
+</style>
 </head>
 <body>
 <div id="root"></div>
@@ -42,37 +49,38 @@ const P = {
 };
 
 const s = {
-  app:      { minHeight:"100vh", background:P.bg, fontFamily:"Georgia,serif", color:P.text },
-  header:   { background:"linear-gradient(135deg,#C0603A,#D4845E)", color:"#fff", textAlign:"center", padding:"32px 20px 24px" },
-  hTitle:   { fontSize:22, fontWeight:"bold", margin:0, letterSpacing:.5 },
-  hSub:     { fontSize:13, marginTop:6, opacity:.85 },
-  tabs:     { display:"flex", background:"#fff", borderBottom:"2px solid "+P.border },
-  tab:   a  => ({ flex:1, padding:"13px 6px", border:"none", background:a?P.light:"#fff", color:a?P.primary:P.muted, fontWeight:a?"bold":"normal", fontSize:14, cursor:"pointer", borderBottom:a?"3px solid "+P.primary:"3px solid transparent", fontFamily:"Georgia,serif" }),
-  body:     { maxWidth:600, margin:"0 auto", padding:"20px 16px" },
-  card:     { background:"#fff", borderRadius:12, border:"1px solid "+P.border, padding:20, marginBottom:16, boxShadow:"0 2px 8px rgba(192,96,58,.07)" },
-  cTitle:   { fontSize:16, fontWeight:"bold", color:P.primary, marginBottom:14 },
-  label:    { display:"block", fontSize:13, color:P.muted, marginBottom:4, marginTop:12 },
-  input:    { width:"100%", padding:"10px 12px", borderRadius:8, border:"1px solid "+P.border, fontSize:15, fontFamily:"Georgia,serif", background:P.bg, color:P.text, boxSizing:"border-box" },
-  row:      { display:"flex", gap:12 },
-  btn:   c  => ({ background:c||P.primary, color:"#fff", border:"none", borderRadius:8, padding:"12px 20px", fontSize:15, cursor:"pointer", fontFamily:"Georgia,serif", fontWeight:"bold", width:"100%", marginTop:16 }),
-  badge: (bg,tc) => ({ background:bg, color:tc, borderRadius:20, padding:"3px 10px", fontSize:12, fontWeight:"bold", whiteSpace:"nowrap" }),
-  dCard:    { background:"#fff", borderRadius:12, border:"1px solid "+P.border, padding:16, marginBottom:12 },
-  dName:    { fontWeight:"bold", fontSize:16, color:P.primary },
-  dInfo:    { fontSize:13, color:P.muted, marginTop:3 },
-  aBtn:  (bg,tc,bc) => ({ background:bg, color:tc, border:"1px solid "+bc, borderRadius:8, padding:"8px 14px", fontSize:13, cursor:"pointer", fontFamily:"Georgia,serif", fontWeight:"bold", marginTop:10, marginRight:8 }),
-  empty:    { textAlign:"center", color:P.muted, padding:"40px 20px", fontSize:15 },
-  ok:       { background:P.greenLight, color:P.green, borderRadius:8, padding:"12px 16px", fontSize:14, marginTop:12, textAlign:"center", fontWeight:"bold" },
-  err:      { background:P.redLight, color:P.red, borderRadius:8, padding:"10px 14px", fontSize:13, marginTop:10, textAlign:"center" },
-  chip:     { display:"inline-block", background:P.light, borderRadius:20, padding:"2px 10px", fontSize:12, color:P.primary, marginRight:6, marginTop:4 },
-  tRow:     { display:"flex", gap:10, marginTop:12 },
-  tBtn:  (a,c) => ({ flex:1, padding:"10px 8px", borderRadius:8, border:"2px solid "+(a?c:P.border), background:a?c+"22":"#fff", color:a?c:P.muted, fontWeight:a?"bold":"normal", fontSize:14, cursor:"pointer", fontFamily:"Georgia,serif" }),
-  fRow:     { display:"flex", gap:8, marginBottom:16, flexWrap:"wrap" },
-  fChip: a  => ({ padding:"6px 14px", borderRadius:20, border:"1px solid "+(a?P.primary:P.border), background:a?P.primary:"#fff", color:a?"#fff":P.muted, fontSize:13, cursor:"pointer", fontFamily:"Georgia,serif" }),
-  loader:   { textAlign:"center", padding:"40px 20px", color:P.muted, fontSize:15 },
-  hint:     { fontSize:12, color:P.muted, marginTop:6, fontStyle:"italic" },
-  overlay:  { position:"fixed", inset:0, background:"rgba(0,0,0,.45)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:16 },
-  modal:    { background:"#fff", borderRadius:16, padding:24, width:"100%", maxWidth:420, boxShadow:"0 8px 32px rgba(0,0,0,.18)", maxHeight:"90vh", overflowY:"auto" },
-  mTitle:   { fontWeight:"bold", fontSize:17, marginBottom:12 },
+  app:     { minHeight:"100vh", background:P.bg, fontFamily:"Georgia,serif", color:P.text },
+  header:  { background:"linear-gradient(135deg,#C0603A,#D4845E)", color:"#fff", textAlign:"center", padding:"32px 20px 24px" },
+  hTitle:  { fontSize:22, fontWeight:"bold", margin:0, letterSpacing:.5 },
+  hSub:    { fontSize:13, marginTop:6, opacity:.85 },
+  tabs:    { display:"flex", background:"#fff", borderBottom:"2px solid "+P.border },
+  tab:  a  => ({ flex:1, padding:"13px 6px", border:"none", background:a?P.light:"#fff", color:a?P.primary:P.muted, fontWeight:a?"bold":"normal", fontSize:14, cursor:"pointer", borderBottom:a?"3px solid "+P.primary:"3px solid transparent", fontFamily:"Georgia,serif" }),
+  body:    { maxWidth:600, margin:"0 auto", padding:"20px 16px" },
+  card:    { background:"#fff", borderRadius:12, border:"1px solid "+P.border, padding:20, marginBottom:16, boxShadow:"0 2px 8px rgba(192,96,58,.07)" },
+  cTitle:  { fontSize:16, fontWeight:"bold", color:P.primary, marginBottom:14 },
+  label:   { display:"block", fontSize:13, color:P.muted, marginBottom:4, marginTop:12 },
+  input:   { width:"100%", padding:"10px 12px", borderRadius:8, border:"1px solid "+P.border, fontSize:15, fontFamily:"Georgia,serif", background:P.bg, color:P.text, boxSizing:"border-box" },
+  row:     { display:"flex", gap:12 },
+  btn:  c  => ({ background:c||P.primary, color:"#fff", border:"none", borderRadius:8, padding:"12px 20px", fontSize:15, cursor:"pointer", fontFamily:"Georgia,serif", fontWeight:"bold", width:"100%", marginTop:16 }),
+  badge:(bg,tc) => ({ background:bg, color:tc, borderRadius:20, padding:"3px 10px", fontSize:12, fontWeight:"bold", whiteSpace:"nowrap" }),
+  dCard:   { background:"#fff", borderRadius:12, border:"1px solid "+P.border, padding:16, marginBottom:12 },
+  dName:   { fontWeight:"bold", fontSize:16, color:P.primary },
+  dInfo:   { fontSize:13, color:P.muted, marginTop:3 },
+  aBtn: (bg,tc,bc) => ({ background:bg, color:tc, border:"1px solid "+bc, borderRadius:8, padding:"8px 14px", fontSize:13, cursor:"pointer", fontFamily:"Georgia,serif", fontWeight:"bold", marginTop:10, marginRight:8 }),
+  empty:   { textAlign:"center", color:P.muted, padding:"40px 20px", fontSize:15 },
+  ok:      { background:P.greenLight, color:P.green, borderRadius:8, padding:"12px 16px", fontSize:14, marginTop:12, textAlign:"center", fontWeight:"bold" },
+  err:     { background:P.redLight, color:P.red, borderRadius:8, padding:"10px 14px", fontSize:13, marginTop:10, textAlign:"center" },
+  chip:    { display:"inline-block", background:P.light, borderRadius:20, padding:"2px 10px", fontSize:12, color:P.primary, marginRight:6, marginTop:4 },
+  tRow:    { display:"flex", gap:10, marginTop:12 },
+  tBtn: (a,c) => ({ flex:1, padding:"10px 8px", borderRadius:8, border:"2px solid "+(a?c:P.border), background:a?c+"22":"#fff", color:a?c:P.muted, fontWeight:a?"bold":"normal", fontSize:14, cursor:"pointer", fontFamily:"Georgia,serif" }),
+  fRow:    { display:"flex", gap:8, marginBottom:16, flexWrap:"wrap" },
+  fChip: a => ({ padding:"6px 14px", borderRadius:20, border:"1px solid "+(a?P.primary:P.border), background:a?P.primary:"#fff", color:a?"#fff":P.muted, fontSize:13, cursor:"pointer", fontFamily:"Georgia,serif" }),
+  loader:  { textAlign:"center", padding:"40px 20px", color:P.muted, fontSize:15 },
+  hint:    { fontSize:12, color:P.muted, marginTop:6, fontStyle:"italic" },
+  overlay: { position:"fixed", inset:0, background:"rgba(0,0,0,.45)", zIndex:100, display:"flex", alignItems:"center", justifyContent:"center", padding:16 },
+  modal:   { background:"#fff", borderRadius:16, padding:24, width:"100%", maxWidth:420, boxShadow:"0 8px 32px rgba(0,0,0,.18)", maxHeight:"90vh", overflowY:"auto" },
+  mTitle:  { fontWeight:"bold", fontSize:17, marginBottom:12 },
+  info:    { background:P.light, border:"1px solid "+P.border, borderRadius:8, padding:"10px 14px", fontSize:13, color:P.muted, marginBottom:16, lineHeight:1.5 },
 };
 
 const fmtDate = d => {
@@ -80,10 +88,9 @@ const fmtDate = d => {
   const [y,m,day] = d.split("-");
   return day+"/"+m+"/"+y;
 };
-
 const phoneFilter = e => e.target.value.replace(/[^\d+]/g, "");
 
-/* ── Formulaire de trajet réutilisable ── */
+/* ── Champs de formulaire partagés ── */
 function TripFields({ f, set }) {
   return (
     <div>
@@ -98,6 +105,8 @@ function TripFields({ f, set }) {
       <input style={s.input} value={f.phone} onChange={e => set("phone")({target:{value:phoneFilter(e)}})} placeholder="ex : 0612345678" type="tel"/>
       <label style={s.label}>Lieu de départ *</label>
       <input style={s.input} value={f.from}  onChange={set("from")}  placeholder={f.direction==="aller"?"ex : Paris 15e, Versailles...":"ex : Salle des fêtes"}/>
+      <label style={s.label}>Lieu d'arrivée *</label>
+      <input style={s.input} value={f.to}    onChange={set("to")}    placeholder={f.direction==="aller"?"ex : Salle des fêtes":"ex : Paris 15e, Versailles..."}/>
       <div className="date-time-row">
         <div>
           <label style={s.label}>Date *</label>
@@ -119,17 +128,17 @@ function TripFields({ f, set }) {
 }
 
 /* ── Ajout d'un trajet ── */
-const EMPTY = { name:"", phone:"", from:"", date:"", time:"", seats:"3", note:"", direction:"aller" };
+const EMPTY = { name:"", phone:"", from:"", to:"", date:"", time:"", seats:"3", note:"", direction:"aller" };
 
 function AddTripCard({ onAdd }) {
-  const [f, setF]         = useState(EMPTY);
-  const [pin, setPin]     = useState("");
-  const [ok, setOk]       = useState(false);
-  const [loading, setL]   = useState(false);
+  const [f, setF]       = useState(EMPTY);
+  const [pin, setPin]   = useState("");
+  const [ok, setOk]     = useState(false);
+  const [loading, setL] = useState(false);
   const set = k => e => setF(p => ({...p, [k]:e.target.value}));
 
   const submit = async () => {
-    if (!f.name||!f.phone||!f.from||!f.date||!f.time||!pin) return alert("Merci de remplir tous les champs obligatoires.");
+    if (!f.name||!f.phone||!f.from||!f.to||!f.date||!f.time||!pin) return alert("Merci de remplir tous les champs obligatoires.");
     if (pin.length < 4) return alert("Le code secret doit faire au moins 4 caractères.");
     setL(true);
     try {
@@ -218,10 +227,10 @@ function LeaveModal({ driver, onClose }) {
     <div style={s.overlay}>
       <div style={s.modal}>
         <div style={{...s.mTitle, color:P.red}}>🚪 Se retirer du trajet</div>
-        <div style={{fontSize:13, color:P.muted, marginBottom:16}}>
-          {"Trajet de "+driver.name+" — "+fmtDate(driver.date)+" à "+driver.time}
+        <div style={s.info}>
+          💡 Si vous avez rejoint ce trajet et souhaitez vous désinscrire, entrez votre prénom et nom ci-dessous exactement comme vous les avez saisis lors de votre inscription.
         </div>
-        <label style={s.label}>Votre prénom et nom (tel qu'indiqué lors de l'inscription)</label>
+        <label style={s.label}>Votre prénom et nom *</label>
         <input style={s.input} value={name} onChange={e=>{setName(e.target.value);setErr("");}} placeholder="ex : Jean Martin"/>
         {err && <div style={s.err}>{err}</div>}
         <div style={s.row}>
@@ -276,7 +285,7 @@ function PaxModal({ driver, onClose }) {
 
 /* ── Modifier ── */
 function EditModal({ driver, onClose }) {
-  const [f, setF]       = useState({ name:driver.name, phone:driver.phone, from:driver.from, date:driver.date, time:driver.time, seats:String(driver.seats), note:driver.note||"", direction:driver.direction });
+  const [f, setF] = useState({ name:driver.name, phone:driver.phone, from:driver.from, to:driver.to||"", date:driver.date, time:driver.time, seats:String(driver.seats), note:driver.note||"", direction:driver.direction });
   const [pin, setPin]   = useState("");
   const [err, setErr]   = useState("");
   const [loading, setL] = useState(false);
@@ -343,10 +352,10 @@ function DeleteModal({ driver, onClose }) {
     <div style={s.overlay}>
       <div style={s.modal}>
         <div style={{...s.mTitle, color:P.red}}>🗑 Supprimer ce trajet ?</div>
-        <div style={{fontSize:13, color:P.muted, marginBottom:16}}>
+        <div style={{fontSize:13, color:P.muted, marginBottom:8}}>
           {"Trajet de "+driver.name+" — "+fmtDate(driver.date)+" à "+driver.time}
         </div>
-        <div style={{fontSize:13, color:P.red, marginBottom:4}}>⚠️ Cette action est irréversible.</div>
+        <div style={{fontSize:13, color:P.red, marginBottom:12}}>⚠️ Cette action est irréversible.</div>
         <label style={s.label}>Votre code secret *</label>
         <input style={s.input} value={pin} onChange={e=>{setPin(e.target.value);setErr("");}} type="password" placeholder="Entrez votre code secret"/>
         {err && <div style={s.err}>{err}</div>}
@@ -409,6 +418,7 @@ function RideList({ drivers, loading }) {
                     </div>
                     <div style={s.dInfo}>{"📅 "+fmtDate(d.date)+" à "+d.time}</div>
                     <div style={s.dInfo}>{"📍 Départ : "+d.from}</div>
+                    <div style={s.dInfo}>{"🏁 Arrivée : "+(d.to||"—")}</div>
                     {d.note && <div style={s.dInfo}>{"💬 "+d.note}</div>}
                     <div style={s.dInfo}>{"📞 "+d.phone}</div>
                   </div>
@@ -422,7 +432,7 @@ function RideList({ drivers, loading }) {
                   </div>
                 )}
                 <div style={{marginTop:4}}>
-                  {!full     && <button style={s.aBtn(P.greenLight, P.green,  P.green)}  onClick={()=>setJoin(d)}>✦ Rejoindre</button>}
+                  {!full     && <button style={s.aBtn(P.greenLight, P.green,   P.green)}   onClick={()=>setJoin(d)}>✦ Rejoindre</button>}
                   {paxList.length>0 && <button style={s.aBtn(P.light,      P.primary, P.primary)} onClick={()=>setPax(d)}>📞 Passagers</button>}
                   {paxList.length>0 && <button style={s.aBtn(P.redLight,   P.red,     P.red)}     onClick={()=>setLeave(d)}>🚪 Se retirer</button>}
                   <button style={s.aBtn(P.blueLight, P.blue,    P.blue)}    onClick={()=>setEdit(d)}>✏️ Modifier</button>
@@ -459,8 +469,8 @@ function App() {
   return (
     <div style={s.app}>
       <div style={s.header}>
-        <div style={{fontSize:28, marginBottom:8}}>👰🏼🤵🏻</div>
-        <div style={s.hTitle}>Covoiturage Mariage Bérengère et Quentin</div>
+        <div style={{fontSize:28, marginBottom:8}}>👰‍♀️🤵‍♂️</div>
+        <div style={s.hTitle}>Mariage Bérengère et Quentin</div>
         <div style={s.hSub}>9 mai 2026 · Covoiturage entre invités</div>
       </div>
       <div style={s.tabs}>
